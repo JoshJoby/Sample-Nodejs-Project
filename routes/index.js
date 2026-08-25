@@ -269,11 +269,11 @@ exports.import = function (req, res, next) {
     var extracted_path = "/tmp/extracted_files";
     zip.extractAllTo(extracted_path, true);
     data = "No backup.txt file found";
-    try {
-      data = fs.readFileSync(extracted_path + '/backup.txt', 'ascii');
-    } catch (err) {
-      console.log('Error reading backup.txt:', err);
-    }
+    fs.readFile('backup.txt', 'ascii', function (err, data) {
+      if (!err) {
+        data = data;
+      }
+    });
   } else {
     data = importFile.data.toString('ascii');
   }
